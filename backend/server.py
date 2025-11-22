@@ -15,7 +15,6 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 
-
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
@@ -501,18 +500,23 @@ async def get_stats(session_token: Optional[str] = Cookie(None), authorization: 
         "pending_reviews": pending_reviews,
         "total_complaints": total_complaints,
         "pending_complaints": pending_complaints,
-        "total_messages": total_messages
+        "total_messages": total_messages#@app.middleware("http")
     }
 
 
+# Correct CORS Middleware (place BEFORE include_router)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://v4tech-frontend.onrender.com",
+        "http://localhost:3000"
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["*"]
+)
 
-@app.middleware("http")
-async def add_cors_headers(request, call_next):
-    response = await call_next(request)
-    response.headers["Access-Control-Allow-Origin"] = "https://v4tech-frontend.onrender.com"
-    response.headers["Access-Control-Allow-Credentials"] = "true"
-    return response
-
+# Static cache middleware (KEEP THIS)
 @app.middleware("http")
 async def cache_static_files(request, call_next):
     response = await call_next(request)
@@ -522,18 +526,8 @@ async def cache_static_files(request, call_next):
         response.headers["Cache-Control"] = "public, max-age=31536000"
     return response
 
-app.include_router(api_router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=[
-        "https://v4tech-frontend.onrender.com",
-        "http://localhost:3000"
-    ],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.include_router(api_router)
 
 app.add_middleware(
     SessionMiddleware,
@@ -541,7 +535,6 @@ app.add_middleware(
     same_site="none",
     https_only=True
 )
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
