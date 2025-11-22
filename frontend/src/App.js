@@ -26,6 +26,7 @@ const AUTH_URL = "https://auth.emergentagent.com";
 
 const Navigation = ({ user, onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
   
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0D0D0D]/90 backdrop-blur-lg border-b border-[#2A2A2A]" style={{background:'Transparent'}} >
@@ -51,7 +52,7 @@ const Navigation = ({ user, onLogout }) => {
                 <Button onClick={onLogout} variant="outline" size="sm" data-testid="logout-btn">Logout</Button>
               </>
             ) : (
-              <Button onClick={() => Navigate('/admin-login')} size="sm" data-testid="admin-login-btn">Admin Login</Button>
+              <Button onClick={() => navigate('/admin-login')} size="sm" data-testid="admin-login-btn">Admin Login</Button>
             )}
           </div>
           
@@ -74,7 +75,7 @@ const Navigation = ({ user, onLogout }) => {
                 <Button onClick={onLogout} variant="outline" size="sm" className="w-full mt-2">Logout</Button>
               </>
             ) : (
-              <Button onClick={() => Navigate('/admin-login')} size="sm" className="w-full mt-2">Admin Login</Button>
+              <Button onClick={() => navigate('/admin-login')} size="sm" className="w-full mt-2">Admin Login</Button>
             )}
           </div>
         )}
