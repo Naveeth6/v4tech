@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "App.css";
-import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
+import { HashRouter, Navigate, Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Button } from "components/ui/button";
 import { Input } from "components/ui/input";
@@ -1827,10 +1827,17 @@ function App() {
       toast.error("Logout failed");
     }
   };
+
+  const ProtectedRoute = ({ children }) => {
+    if (!user) {
+      return <Navigate to="/admin-login" />;
+    }
+    return children;
+  };
   
   
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Toaster />
       <Navigation user={user} onLogout={handleLogout} />
       <Routes>
@@ -1842,10 +1849,19 @@ function App() {
         <Route path="/support" element={<Support />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin" element={<Admin />} />
+
+        {/* Protected Admin Route */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
