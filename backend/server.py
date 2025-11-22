@@ -503,36 +503,31 @@ async def get_stats(session_token: Optional[str] = Cookie(None), authorization: 
 
 
 
-
+@app.middleware("http")
+async def add_cors_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "https://v4tech-frontend.onrender.com"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    return response
 
 @app.middleware("http")
 async def cache_static_files(request, call_next):
     response = await call_next(request)
-    
-    # Cache only static files
     if any(request.url.path.endswith(ext) for ext in [
         ".js", ".css", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".woff2"
     ]):
-        response.headers["Cache-Control"] = "public, max-age=31536000"  # 1 year
-    
+        response.headers["Cache-Control"] = "public, max-age=31536000"
     return response
 
-
-
-
-
-# Include router
 app.include_router(api_router)
-
-
 
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_origins=[
-    "https://v4tech-frontend.onrender.com",
-    "http://localhost:3000"
-],
+        "https://v4tech-frontend.onrender.com",
+        "http://localhost:3000"
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
