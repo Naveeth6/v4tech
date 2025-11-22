@@ -970,7 +970,7 @@ const Support = () => {
               <CardContent className="p-8">
                 <form onSubmit={handleSearch} className="space-y-6">
                   <div>
-                    <Label htmlFor="searchId">Enter Phone Number</Label>
+                    <Label htmlFor="searchId">Enter Phone Number or Complaint ID</Label>
                     <Input
                       id="searchId"
                       value={searchId}
@@ -979,7 +979,7 @@ const Support = () => {
                       required
                       data-testid="search-complaint-input"
                     />
-                    <p className="text-sm text-gray-200 mt-1">You can search using Phone Number</p>
+                    <p className="text-sm text-gray-200 mt-1">You can search using Phone Number or Complaint ID</p>
                   </div>
                   
                   <Button type="submit" size="lg" className="w-full" disabled={searching} data-testid="search-complaint-btn">
