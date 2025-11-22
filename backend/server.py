@@ -504,8 +504,7 @@ async def get_stats(session_token: Optional[str] = Cookie(None), authorization: 
         "total_messages": total_messages#@app.middleware("http")
     }
 
-
-app = FastAPI()
+# CORS middleware
 
 app.add_middleware(
     CORSMiddleware,
@@ -515,13 +514,7 @@ app.add_middleware(
     ],
     allow_methods=["*"],
     allow_headers=["*"],
-)
-@app.middleware("http")
-async def add_cookies(request, call_next):
-    response = await call_next(request)
-    response.headers["Access-Control-Allow-Credentials"] = "true"
-    return response
-
+    )
 
 # Cache static files
 @app.middleware("http")
