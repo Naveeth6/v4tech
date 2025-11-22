@@ -504,19 +504,20 @@ async def get_stats(session_token: Optional[str] = Cookie(None), authorization: 
     }
 
 
-# Correct CORS Middleware (place BEFORE include_router)
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
+    allow_credentials=True,
     allow_origins=[
         "https://v4tech-frontend.onrender.com",
         "http://localhost:3000"
     ],
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["*"]
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# Static cache middleware (KEEP THIS)
+# Cache static files
 @app.middleware("http")
 async def cache_static_files(request, call_next):
     response = await call_next(request)
@@ -525,7 +526,6 @@ async def cache_static_files(request, call_next):
     ]):
         response.headers["Cache-Control"] = "public, max-age=31536000"
     return response
-
 
 app.include_router(api_router)
 
