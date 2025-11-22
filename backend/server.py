@@ -12,6 +12,9 @@ from datetime import datetime, timezone, timedelta
 import httpx
 import base64
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
+
+
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -530,6 +533,13 @@ app.add_middleware(
     ],
     allow_methods=["*"],
     allow_headers=["*"],
+)
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="supersecretkey",
+    same_site="none",
+    https_only=True
 )
 
 logging.basicConfig(
