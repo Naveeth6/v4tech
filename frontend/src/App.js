@@ -453,7 +453,7 @@ const Services = () => {
                     <span>Ongoing maintenance and updates</span>
                   </li>
                 </ul>
-                <Button size="lg" onClick={() => navigate('/book-service')} data-testid="book-web-btn"  data-aos="zoom-in" data-aos-delay="500" className="text-base sm:text-xs leading-tight px-4 py-2 sm:px-5 sm:py-3 whitespace-normal break-words text-center">Book Web Development / Starting at Just ₹2599 🚀 </Button>
+                <Button size="lg" onClick={() => navigate('/book-service')} data-testid="book-laptop-btn" data-aos="zoom-in" data-aos-delay="500" className="text-base sm:text-lg leading-tight px-4 py-2 sm:px-8 sm:py-3 whitespace-normal break-words text-center">Book Web Development / Starting at Just ₹1999 🚀 </Button>
               </div>
             </div>
             </div>
