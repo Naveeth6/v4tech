@@ -69,14 +69,14 @@ const Navigation = ({ user, onLogout }) => {
             <Link to="/reviews" className="block py-2 text-gray-300 hover:text-[#D4AF37]" onClick={() => setMobileMenuOpen(false)}>Reviews</Link>
             <Link to="/support" className="block py-2 text-gray-300 hover:text-[#D4AF37]" onClick={() => setMobileMenuOpen(false)}>Support</Link>
             <Link to="/contact" className="block py-2 text-gray-300 hover:text-[#D4AF37]" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
-            {user ? (
+             {/* {user ? (
               <>
                 <Link to="/admin" className="block py-2 text-gray-300 hover:text-[#D4AF37]" onClick={() => setMobileMenuOpen(false)}>Admin</Link>
                 <Button onClick={onLogout} variant="outline" size="sm" className="w-full mt-2">Logout</Button>
               </>
             ) : (
               <Button onClick={() => navigate('/admin-login')} size="sm" className="w-full mt-2">Admin Login</Button>
-            )}
+            )} */}
           </div>
         )}
       </div>
