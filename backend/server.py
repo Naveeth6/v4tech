@@ -178,8 +178,8 @@ async def local_login(response: Response, data: dict = Body(...)):
         key="session_token",
         value=session_token,
         httponly=True,
-        secure=COOKIE_SECURE,
-        samesite="none" if COOKIE_SECURE else "lax",
+        secure=True,
+        samesite="None",
         path="/",
         max_age=7 * 24 * 60 * 60
     )
@@ -224,11 +224,12 @@ async def create_session(session_id: str, response: Response):
         key="session_token",
         value=session_token,
         httponly=True,
-        secure=COOKIE_SECURE,
-        samesite="none" if COOKIE_SECURE else "lax",
+        secure=True,
+        samesite="None",
         path="/",
         max_age=7 * 24 * 60 * 60
-    )
+        )
+
     
     return {"success": True, "user": data}
 
@@ -510,8 +511,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_origins=[
-        "https://v4tech-frontend.onrender.com",
-        "http://localhost:3000"
+        "https://v4tech-frontend.onrender.com"
     ],
     allow_methods=["*"],
     allow_headers=["*"],
@@ -526,7 +526,7 @@ async def cache_static_files(request, call_next):
     ]):
         response.headers["Cache-Control"] = "public, max-age=31536000"
     return response
-
+    
 app.include_router(api_router)
 
 app.add_middleware(
