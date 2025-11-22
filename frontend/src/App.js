@@ -224,7 +224,7 @@ const Home = () => {
   );
 };
 
-const AdminLogin = () => {
+const AdminLogin = ({ setUser }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -234,20 +234,25 @@ const AdminLogin = () => {
   e.preventDefault();
   setLoading(true);
   
-  try {
-    await axios.post(`${API}/auth/local-login`, 
+   try {
+    await axios.post(`${API}/auth/local-login`,
       { username, password },
       { withCredentials: true }
     );
-    
+
+    // Immediately assume authenticated
+    setUser({ username }); // simple mark as logged in
+
     toast.success("Login Successful!");
-    navigate('/admin');  // <-- after this checkAuth() will run in Admin
+    navigate("/admin"); // redirect instantly
+
   } catch (err) {
-    toast.error('Invalid Credentials');
+    toast.error("Invalid Credentials");
   } finally {
     setLoading(false);
   }
 };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -1836,20 +1841,9 @@ function App() {
   };
 
  const ProtectedRoute = ({ children }) => {
-  // Still checking authentication?
-  if (user === undefined) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-white text-xl">
-        Checking Authentication...
-      </div>
-    );
-  }
-
-  // If not authenticated redirect
   if (!user) {
     return <Navigate to="/admin-login" replace />;
   }
-
   return children;
 };
   
@@ -1865,7 +1859,7 @@ function App() {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/support" element={<Support />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-login" element={<AdminLogin setUser={setUser}/>} />
 
         {/* Protected Admin Route */}
         <Route
