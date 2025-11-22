@@ -233,12 +233,17 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
+  
   try {
-    const res = await axios.post(`${API}/auth/local-login`, { username, password }, { withCredentials: true });
+    await axios.post(`${API}/auth/local-login`, 
+      { username, password },
+      { withCredentials: true }
+    );
+    
     toast.success("Login Successful!");
-    navigate('/admin');  // << UPDATED
+    navigate('/admin');  // <-- after this checkAuth() will run in Admin
   } catch (err) {
-    toast.error('Login failed');
+    toast.error('Invalid Credentials');
   } finally {
     setLoading(false);
   }
@@ -1830,12 +1835,12 @@ function App() {
   };
 
   const ProtectedRoute = ({ children }) => {
-    if (!user) {
-      return <Navigate to="/admin-login" />;
-    }
-    return children;
-  };
-  
+  if (user === null) {
+    return <Navigate to="/admin-login" replace />;
+  }
+  return children;
+};
+
   
   return (
     <HashRouter>
