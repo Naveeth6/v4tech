@@ -15,6 +15,7 @@ import Logo from "./logo/logo.png"
 import MorphingText from "./components/MorphingText";
 import AOS from "aos";
 import "aos/dist/aos.css";
+axios.defaults.withCredentials = true;
 
 
 
