@@ -372,7 +372,7 @@ const Services = () => {
                     <span>Regular maintenance and support</span>
                   </li>
                 </ul>
-                <Button size="lg" onClick={() => navigate('/book-service')} data-testid="book-cctv-btn" data-aos="zoom-in" data-aos-delay="300" className="text-base sm:text-lg leading-tight px-4 py-2 sm:px-8 sm:py-3 whitespace-normal break-words text-center">Book CCTV Service / Starting at Just ₹3999 🚀</Button>
+                <Button size="lg" onClick={() => navigate('/book-service')} data-testid="book-cctv-btn" data-aos="zoom-in" data-aos-delay="300" className="text-base sm:text-lg leading-tight px-4 py-2 sm:px-8 sm:py-3 whitespace-normal break-words text-center">Book CCTV Service / Starting at Just ₹499 🚀</Button>
               </div>
             </div>
           </div>
@@ -448,7 +448,7 @@ const Services = () => {
                     <span>Ongoing maintenance and updates</span>
                   </li>
                 </ul>
-                <Button size="lg" onClick={() => navigate('/book-service')} data-testid="book-web-btn"  data-aos="zoom-in" data-aos-delay="500" className="text-base sm:text-xs leading-tight px-4 py-2 sm:px-5 sm:py-3 whitespace-normal break-words text-center">Book Web Development / Starting at Just ₹3499 🚀 </Button>
+                <Button size="lg" onClick={() => navigate('/book-service')} data-testid="book-web-btn"  data-aos="zoom-in" data-aos-delay="500" className="text-base sm:text-xs leading-tight px-4 py-2 sm:px-5 sm:py-3 whitespace-normal break-words text-center">Book Web Development / Starting at Just ₹2599 🚀 </Button>
               </div>
             </div>
             </div>
@@ -1802,7 +1802,8 @@ Chat on WhatsApp
   }
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined); // undefined → checking auth
+
   
   useEffect(() => {
     checkAuth();
@@ -1834,13 +1835,23 @@ function App() {
     }
   };
 
-  const ProtectedRoute = ({ children }) => {
-  if (user === null) {
+ const ProtectedRoute = ({ children }) => {
+  // Still checking authentication?
+  if (user === undefined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white text-xl">
+        Checking Authentication...
+      </div>
+    );
+  }
+
+  // If not authenticated redirect
+  if (!user) {
     return <Navigate to="/admin-login" replace />;
   }
+
   return children;
 };
-
   
   return (
     <HashRouter>
