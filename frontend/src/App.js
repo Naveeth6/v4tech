@@ -51,7 +51,7 @@ const Navigation = ({ user, onLogout }) => {
                 <Button onClick={onLogout} variant="outline" size="sm" data-testid="logout-btn">Logout</Button>
               </>
             ) : (
-              <Button onClick={() => window.location.href = '/admin-login'} size="sm" data-testid="admin-login-btn">Admin Login</Button>
+              <Button onClick={() => Navigate('/admin-login')} size="sm" data-testid="admin-login-btn">Admin Login</Button>
             )}
           </div>
           
@@ -74,7 +74,7 @@ const Navigation = ({ user, onLogout }) => {
                 <Button onClick={onLogout} variant="outline" size="sm" className="w-full mt-2">Logout</Button>
               </>
             ) : (
-              <Button onClick={() => window.location.href = '/admin-login'} size="sm" className="w-full mt-2">Admin Login</Button>
+              <Button onClick={() => Navigate('/admin-login')} size="sm" className="w-full mt-2">Admin Login</Button>
             )}
           </div>
         )}
@@ -230,18 +230,18 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await axios.post(`${API}/auth/local-login`, { username, password }, { withCredentials: true });
-      // on success, navigate to admin
-      window.location.href = '/admin';
-    } catch (err) {
-      toast.error('Login failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const res = await axios.post(`${API}/auth/local-login`, { username, password }, { withCredentials: true });
+    toast.success("Login Successful!");
+    navigate('/admin');  // << UPDATED
+  } catch (err) {
+    toast.error('Login failed');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center">
