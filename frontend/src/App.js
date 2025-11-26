@@ -9,12 +9,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "compo
 import { Label } from "components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/ui/select";
 import { toast, Toaster } from "sonner";
-import { Shield, Laptop, Globe, Star, Phone, Mail, MapPin, Menu, X, Search, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { Shield, Laptop, Globe, Star, Phone, Mail, MapPin, Menu, X, Search, AlertCircle, CheckCircle, Clock, Scroll } from "lucide-react";
 import Prism from "./components/Prism";
 import Logo from "./logo/logo.png"
 import MorphingText from "./components/MorphingText";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ScrollToTop from "./components/ScroolToTop.jsx";
 axios.defaults.withCredentials = true;
 
 
@@ -1849,6 +1850,7 @@ function App() {
   
   return (
     <HashRouter>
+      <ScrollToTop/>
       <Toaster />
       <Navigation user={user} onLogout={handleLogout} />
       <Routes>
