@@ -510,6 +510,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_origins=[
+        "https://v4-tech.in",
+        "https://www.v4-tech.in",
         "https://v4tech-frontend.onrender.com"
     ],
     allow_methods=["*"],
