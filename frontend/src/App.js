@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "compo
 import { Label } from "components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/ui/select";
 import { toast, Toaster } from "sonner";
-import { Shield, Laptop, Globe, Star, Phone, Mail, MapPin, Menu, X, Search, AlertCircle, CheckCircle, Clock, Scroll } from "lucide-react";
+import { Shield, Laptop, Globe, Star, Phone, Mail, MapPin, Menu, X, Search, AlertCircle, CheckCircle, Clock, Scroll} from "lucide-react";
 import Prism from "./components/Prism";
 import Logo from "./logo/logo.png"
 import MorphingText from "./components/MorphingText";
@@ -88,6 +88,10 @@ const Navigation = ({ user, onLogout }) => {
 const Home = () => {
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
+  const isMobile =
+  typeof window !== "undefined" &&
+  (window.innerWidth < 768 ||
+    /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent));
   
   useEffect(() => {
     const fetchReviews = async () => {
@@ -105,18 +109,33 @@ const Home = () => {
     <div className="min-h-screen"  data-testid="home-page">
       <section className="relative h-screen flex items-center justify-center overflow-hidden" >
         <div style={{ width: '100%',height:'100vh' ,position:'absolute',backgroundColor:'black'}}>
-  <Prism
-    animationType="rotate"
-    timeScale={0.5}
-    height={3.5}
-    baseWidth={5.5}
-    scale={3.6}
-    hueShift={0}
-    colorFrequency={1}
-    noise={0}
-    glow={1}
-  />
-</div>
+           {!isMobile && (
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          position: "absolute",
+          backgroundColor: "black",
+        }}>
+        <Prism
+          animationType="rotate"
+          timeScale={0.5}
+          height={3.5}
+          baseWidth={5.5}
+          scale={3.6}
+          hueShift={0}
+          colorFrequency={1}
+          noise={0}
+          glow={1}
+        /> </div>
+      )}
+
+      {isMobile && (
+        <div className="mobilehomestyle"
+        />
+    )}
+  </div>
+
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl sm:text-6xl lg:text-5xl font-bold text-white mb-6">

@@ -2,9 +2,9 @@ import { useEffect, useRef } from "react";
 import { Renderer, Triangle, Program, Mesh } from "ogl";
 
 const Prism = ({
-  height = 11,
+  height = 3.5,
   baseWidth = 5.5,
-  animationType = 'rotate',
+  animationType = "rotate",
   glow = 1,
   offset = { x: 0, y: -300 },
   noise = 0.5,
@@ -16,7 +16,7 @@ const Prism = ({
   inertia = 0.05,
   bloom = 1,
   suspendWhenOffscreen = false,
-  timeScale = 0.3
+  timeScale = 0.3,
 }) => {
   const containerRef = useRef(null);
 
