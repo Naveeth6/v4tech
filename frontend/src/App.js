@@ -104,7 +104,7 @@ const Home = () => {
   return (
     <div className="min-h-screen"  data-testid="home-page">
       <section className="relative h-screen flex items-center justify-center overflow-hidden" >
-        <div style={{ width: '100%',height:'100%' ,position:'absolute',backgroundColor:'black'}}>
+        <div style={{ width: '100%',height:'100vh' ,position:'absolute',backgroundColor:'black'}}>
   <Prism
     animationType="rotate"
     timeScale={0.5}
